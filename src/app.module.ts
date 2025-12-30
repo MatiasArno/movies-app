@@ -2,9 +2,10 @@ import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TerminusModule } from '@nestjs/terminus';
-import { EnvValidationSchema } from './config/env.validation';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { EnvValidationSchema } from './config/env.validation';
 import configuration from './config/app.config';
 
 import { AuthModule } from './modules/auth/auth.module';
@@ -59,6 +60,8 @@ import { SwapiModule } from './modules/swapi/swapi.module';
     UsersModule,
     MoviesModule,
     SwapiModule,
+
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [],
