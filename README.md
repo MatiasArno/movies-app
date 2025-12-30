@@ -1,98 +1,165 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🎬 Movies API Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend robusto desarrollado con **NestJS**, diseñado para gestionar un catálogo de películas sincronizado con la API pública de Star Wars (SWAPI), ofreciendo funcionalidades de autenticación, roles de usuario y persistencia de datos.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![TypeORM](https://img.shields.io/badge/TypeORM-FE0902?style=for-the-badge&logo=typeorm&logoColor=white)
+![Jest](https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white)
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Despliegue (Live Demo)
 
-## Project setup
+El proyecto se encuentra desplegado y funcional en **Render.com**.
+
+#### ⚠️ IMPORTANTE: El servidor se duerme por inactividad. El primer request tarda más de un minuto en responder ⚠️
+
+- **API Base URL:** `https://movies-app-yvyp.onrender.com/api/v1`
+- **Documentación Swagger:** `https://movies-app-yvyp.onrender.com/api/docs`
+- **Health Check:** `https://movies-app-yvyp.onrender.com/api/v1/status`
+
+---
+
+## 📋 Características Principales
+
+- **Arquitectura Modular:** Basada en capas (Controller, Service, Repository) y Vertical Slicing.
+- **Autenticación & Seguridad:**
+  - Login/Registro con **JWT (JSON Web Token)**.
+  - Hashing de contraseñas con `bcrypt`.
+  - **RBAC (Role-Based Access Control):** Diferenciación entre usuarios `ADMIN` y `REGULAR`.
+  - Protección de endpoints mediante `Guards` y Decoradores personalizados.
+- **Integración Externa (Adapter Pattern):**
+  - Conexión con **SWAPI** (Star Wars API).
+  - Patrón Adaptador para aislar la lógica externa del dominio interno.
+  - Sincronización automática (Cron Jobs) y manual de películas.
+- **Base de Datos:**
+  - PostgreSQL (alojada en Neon.tech).
+  - ORM: TypeORM con Entidades y Repositorios.
+- **Calidad de Código:**
+  - Validación de datos de entrada (DTOs) con `class-validator`.
+  - Manejo global de errores y logs centralizados.
+  - Variables de entorno tipadas y validadas con `Joi`.
+  - **Unit Testing:** Cobertura de lógica de negocio crítica con Jest.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+- **Core:** NestJS 11, TypeScript.
+- **Base de Datos:** PostgreSQL, TypeORM.
+- **Seguridad:** Passport, JWT, Helmet, Bcrypt.
+- **Documentación:** Swagger (OpenAPI).
+- **Testing:** Jest.
+- **Infraestructura:** Render (App), Neon (DB).
+
+---
+
+## ⚙️ Instalación y Ejecución Local
+
+### 1. Prerrequisitos
+
+- Node.js (v18 o superior)
+- npm o pnpm
+- Una instancia de PostgreSQL (Local o Docker)
+
+### 2. Clonar el repositorio
 
 ```bash
-$ npm install
+git clone https://github.com/MatiasArno/movies-app
 ```
 
-## Compile and run the project
+### 3. Instalar dependencias
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+### 4. Configurar Variables de Entorno
+
+Crea un archivo `.env` en la raíz del proyecto basándote en el siguiente esquema:
+
+```env
+# APP
+PORT = 3000
+NODE_ENV = development
+
+# DATABASE (PostgreSQL)
+DB_HOST = localhost
+DB_PORT = 5432
+DB_USERNAME = postgres
+DB_PASSWORD = tu_password
+DB_NAME = movies_db
+DB_SSL = false
+
+# SECURITY
+JWT_SECRET = tu_secreto_super_seguro
+ADMIN_SECRET_KEY = clave_secreta_para_crear_admins
+
+# EXTERNAL APIS
+SWAPI_URL = https://www.swapi.tech/api
+```
+
+### 5. Iniciar el servidor (Development)
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:dev
 ```
 
-## Deployment
+La aplicación estará disponible en `http://localhost:3000/api/v1`.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+---
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 🧪 Testing
+
+El proyecto cuenta con pruebas unitarias para asegurar la integridad de los servicios críticos (Auth, Movies, Sincronización).
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Ejecutar tests unitarios
+npm run test
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## 📚 Documentación de API (Endpoints)
 
-Check out a few resources that may come in handy when working with NestJS:
+Puedes ver y probar todos los endpoints interactivos ingresando a `/api/docs` una vez levantada la aplicación.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Resumen de Endpoints Clave:
 
-## Support
+| Método   | Endpoint         | Rol Requerido | Descripción                            |
+| :------- | :--------------- | :------------ | :------------------------------------- |
+| `POST`   | `/auth/register` | Público       | Registrar usuario (Regular o Admin\*). |
+| `POST`   | `/auth/login`    | Público       | Obtener Token JWT.                     |
+| `GET`    | `/movies`        | **Público**   | Listar catálogo de películas.          |
+| `GET`    | `/movies/:id`    | Auth (Todos)  | Ver detalle de una película.           |
+| `POST`   | `/movies`        | **Admin**     | Crear película manualmente.            |
+| `PATCH`  | `/movies/:id`    | **Admin**     | Editar película.                       |
+| `DELETE` | `/movies/:id`    | **Admin**     | Eliminar película.                     |
+| `POST`   | `/movies/sync`   | **Admin**     | Forzar sincronización con SWAPI.       |
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+_> Para registrar un usuario ADMIN, es necesario enviar el campo `adminSecret` en el body con el valor configurado en el `.env`._
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 🏗️ Arquitectura del Proyecto
 
-## License
+El proyecto sigue una arquitectura modular con separación de responsabilidades:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```text
+src/
+|-- common/          # Decoradores, filtros, interceptores y middlewares globales
+|-- config/          # Validación y tipado de variables de entorno
+|-- modules/
+|   |-- auth/        # Lógica de JWT, Guards y Strategies
+|   |-- movies/      # Dominio principal (CRUD y Sync Logic)
+|   |-- swapi/       # Módulo de Infraestructura (Adaptador HTTP)
+|   |-- users/       # Gestión de usuarios y roles
+|-- app.module.ts    # Orquestador principal
+|-- main.ts          # Punto de entrada (Configuración global)
+```
+
+---
+
+**Desarrollado con ❤️ usando NestJS.**
