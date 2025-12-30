@@ -5,11 +5,18 @@ import { TerminusModule } from '@nestjs/terminus';
 import { EnvValidationSchema } from './config/env.validation';
 import { AppController } from './app.controller';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import configuration from './config/app.config';
+
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { MoviesModule } from './modules/movies/movies.module';
+import { SwapiModule } from './modules/swapi/swapi.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      load: [configuration],
       validationSchema: EnvValidationSchema,
       validationOptions: { abortEarly: true },
     }),
@@ -42,11 +49,16 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
           password: config.get<string>('DB_PASSWORD'),
           database: config.get<string>('DB_NAME'),
           autoLoadEntities: true,
-          synchronize: true, // ⚠️ En PROD debe ser false
+          synchronize: true, // ⚠️ PROD >>> synchronize: false ⚠️
           ssl: useSsl ? { rejectUnauthorized: false } : false,
         };
       },
     }),
+
+    AuthModule,
+    UsersModule,
+    MoviesModule,
+    SwapiModule,
   ],
   controllers: [AppController],
   providers: [],
