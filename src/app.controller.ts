@@ -28,7 +28,7 @@ export class AppController {
           status: 'up',
           name: process.env.npm_package_name,
           version: process.env.npm_package_version,
-          port: this.configService.get('PORT'),
+          port: this.configService.get('config.port'),
           documentation: '/api/docs',
           environment: this.configService.get('NODE_ENV'),
           uptime: process.uptime(),

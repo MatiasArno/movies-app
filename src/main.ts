@@ -9,6 +9,7 @@ import {
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { LOG_MESSAGES } from './common/constants/log-messages';
 import helmet from 'helmet';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
@@ -42,7 +43,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  const port = process.env.PORT || 3000;
+  const configService = app.get(ConfigService);
+  const port = configService.getOrThrow<number>('config.port');
+
   await app.listen(port);
 
   logger.log(`${LOG_MESSAGES.BOOTSTRAP.RUNNING} ${port}`);
