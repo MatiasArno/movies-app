@@ -1,6 +1,11 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Logger,
+  ValidationPipe,
+  VersioningType,
+} from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { LOG_MESSAGES } from './common/constants/log-messages';
 import helmet from 'helmet';
@@ -42,5 +47,7 @@ async function bootstrap() {
 
   logger.log(`${LOG_MESSAGES.BOOTSTRAP.RUNNING} ${port}`);
   logger.log(LOG_MESSAGES.BOOTSTRAP.SWAGGER);
+
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 }
 bootstrap();
